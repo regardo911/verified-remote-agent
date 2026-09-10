@@ -1,0 +1,33 @@
+# local control-plane state
+.remote-agent/
+.remote-agent-job-ids.json
+*.db
+*.db-shm
+*.db-wal
+
+# generated reports and receipts
+capacity.csv
+compiled-policy.json
+drill-receipt.json
+economics.csv
+evidence.json
+handoff.md
+handoff-manifest.json
+policy-explain.json
+restore-receipt.json
+restored-agent.db
+upgrade-plan.json
+why.json
+
+# credentials and local process state
+.env
+.env.*
+*.key
+*.pem
+
+# language and editor caches
+__pycache__/
+*.py[cod]
+.DS_Store
+.idea/
+.vscode/

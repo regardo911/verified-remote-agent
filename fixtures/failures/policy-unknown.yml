@@ -1,0 +1,36 @@
+version: 1
+runtime: local-fixture
+read_roots:
+  - repo
+allow_paths:
+  - docs/
+  - tests/
+deny_paths:
+  - .github/workflows/
+  - deploy/
+  - **/*.key
+  - **/.env*
+allowed_commands:
+  - mystery_tool
+  - unit
+  - type
+ask_commands:
+  - install-dependency
+denied_commands:
+  - deploy
+  - publish
+  - rewrite-history
+network_default: deny
+network_allow_aliases:
+  - source-registry
+  - code-host-api
+credential_plaintext: deny
+credential_bindings:
+  - code-host-job-token
+approval_required:
+  - production-migration
+  - credential-change
+  - deploy
+  - publish
+  - expand-budget
+allow_publish: false

@@ -1,0 +1,8 @@
+#!/bin/sh
+# Chapter 7: static structure plus CLI-load check, without dependencies.
+set -eu
+target=remote_agent.py
+if [ "$#" -eq 1 ]; then target=$1; fi
+python3 -c 'import ast,pathlib,sys; t=ast.parse(pathlib.Path(sys.argv[1]).read_text()); assert any(isinstance(n,ast.ImportFrom) and n.module=="__future__" for n in t.body)' "$target"
+python3 "$target" --help >/dev/null
+printf '%s\n' '{"check":"type","status":"pass"}'

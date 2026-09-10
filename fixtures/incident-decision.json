@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "decision_id": "incident-fixture-restore",
+  "approved_by": "operator:fixture",
+  "action": "restore",
+  "target_mode": "no-replacement",
+  "approved": true
+}

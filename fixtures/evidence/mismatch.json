@@ -1,0 +1,19 @@
+{
+  "job_id": "different-job",
+  "attempt_id": "attempt-mismatch",
+  "base_sha": "2222222222222222222222222222222222222222",
+  "acceptance_digest": "sha256:different",
+  "reviewer_rule": "one-human",
+  "accepted": false,
+  "wall_seconds": 68,
+  "setup_seconds": 19,
+  "reviewer_minutes": 5,
+  "runtime_cost": "0.18",
+  "model_cost": "0.10",
+  "storage_cost": "0.01",
+  "network_cost": "0.01",
+  "evidence_complete": false,
+  "hard_constraints": [
+    "base mismatch"
+  ]
+}

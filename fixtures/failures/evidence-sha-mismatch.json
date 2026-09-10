@@ -1,0 +1,10 @@
+{
+  "job_id": "fixture-job",
+  "head_sha": "2222222222222222222222222222222222222222",
+  "checks": {
+    "format": "pass",
+    "unit": "pass",
+    "type": "pass"
+  },
+  "artifacts": {}
+}

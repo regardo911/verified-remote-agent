@@ -1,0 +1,69 @@
+#!/usr/bin/env python3
+"""Evaluate the Chapter 7 closed result set without trusting terminal text."""
+from __future__ import annotations
+
+import hashlib
+import json
+import re
+import sys
+from pathlib import Path
+
+EXPECTED = {
+    "format": "repository-check",
+    "unit": "repository-check",
+    "types": "repository-check",
+    "evidence": "evidence-verifier",
+    "independent-review": "review-registry",
+}
+# Source identities stay fixed here; a result cannot appoint its own authority.
+KNOWN_STATES = {"success", "failure", "cancelled", "skipped"}
+HEX40 = re.compile(r"^[0-9a-f]{40}$")
+DIGEST = re.compile(r"^sha256:[0-9a-f]{64}$")
+
+
+def refuse(reason: str) -> int:
+    print(f"RESULTS_INVALID reason={reason}", file=sys.stderr)
+    return 2
+
+
+def main() -> int:
+    path = Path(sys.argv[1] if len(sys.argv) == 2 else "results.json")
+    if len(sys.argv) > 2:
+        return refuse("usage: aggregate-gate [results.json]")
+    try:
+        body = json.loads(path.read_text())
+    except (OSError, json.JSONDecodeError) as exc:
+        return refuse(str(exc))
+    if set(body) != {"schema_version", "head_sha", "acceptance_digest", "results"}:
+        return refuse("unexpected or missing top-level fields")
+    if body["schema_version"] != 1 or not HEX40.fullmatch(str(body["head_sha"])) or not DIGEST.fullmatch(str(body["acceptance_digest"])):
+        return refuse("unsupported schema, SHA, or acceptance digest")
+    if not isinstance(body["results"], list):
+        return refuse("results must be a list")
+    names = [item.get("name") for item in body["results"] if isinstance(item, dict)]
+    if len(names) != len(body["results"]) or len(names) != len(set(names)):
+        return refuse("malformed or duplicate result names")
+    required = [item for item in body["results"] if item["name"] in EXPECTED]
+    if len(required) != len(EXPECTED) or set(names) & set(EXPECTED) != set(EXPECTED):
+        return refuse("required result set is incomplete")
+    for item in required:
+        if set(item) != {"name", "status", "head_sha", "source"}:
+            return refuse(f"invalid fields for {item['name']}")
+        if item["status"] not in KNOWN_STATES:
+            return refuse(f"unknown status for {item['name']}")
+        if item["head_sha"] != body["head_sha"]:
+            return refuse(f"head SHA mismatch for {item['name']}")
+        if item["source"] != EXPECTED[item["name"]]:
+            return refuse(f"source mismatch for {item['name']}")
+    failed = [item["name"] for item in required if item["status"] != "success"]
+    if failed:
+        print(f"GATE FAIL head={body['head_sha']} failed={','.join(sorted(failed))}", file=sys.stderr)
+        return 2
+    encoded = json.dumps(body, sort_keys=True, separators=(",", ":")).encode()
+    receipt = "sha256:" + hashlib.sha256(encoded).hexdigest()
+    print(f"GATE PASS head={body['head_sha']} acceptance={body['acceptance_digest']} receipt={receipt} optional={len(body['results'])-len(required)}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

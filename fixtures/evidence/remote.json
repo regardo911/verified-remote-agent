@@ -1,0 +1,17 @@
+{
+  "job_id": "scorecard-job",
+  "attempt_id": "attempt-remote",
+  "base_sha": "1111111111111111111111111111111111111111",
+  "acceptance_digest": "sha256:accepted",
+  "reviewer_rule": "one-human",
+  "accepted": true,
+  "wall_seconds": 68,
+  "setup_seconds": 19,
+  "reviewer_minutes": 3,
+  "runtime_cost": "0.18",
+  "model_cost": "0.10",
+  "storage_cost": "0.01",
+  "network_cost": "0.01",
+  "evidence_complete": true,
+  "hard_constraints": []
+}

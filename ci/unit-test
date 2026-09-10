@@ -1,0 +1,19 @@
+#!/bin/sh
+# Chapter 7: run a discovered, nonempty offline acceptance suite.
+set -eu
+suite=tests
+if [ "$#" -eq 1 ]; then suite=$1; fi
+python3 - "$suite" <<'PY'
+import sys
+import unittest
+
+suite = unittest.defaultTestLoader.discover(sys.argv[1])
+count = suite.countTestCases()
+if count == 0:
+    print("no tests discovered", file=sys.stderr)
+    raise SystemExit(2)
+result = unittest.TextTestRunner(verbosity=2).run(suite)
+print(f"tests_run={result.testsRun}")
+raise SystemExit(0 if result.wasSuccessful() else 1)
+PY
+printf '%s\n' '{"check":"unit","status":"pass"}'

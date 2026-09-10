@@ -1,0 +1,7 @@
+#!/bin/sh
+# Chapter 7: repository-owned syntax and whitespace check.
+set -eu
+target=remote_agent.py
+if [ "$#" -eq 1 ]; then target=$1; fi
+python3 -c 'import ast,pathlib,sys; p=pathlib.Path(sys.argv[1]); s=p.read_text(); ast.parse(s); assert "\t" not in s' "$target"
+printf '%s\n' '{"check":"format","status":"pass"}'

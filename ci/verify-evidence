@@ -1,0 +1,9 @@
+#!/bin/sh
+# Chapter 7: bind returned evidence to the caller-supplied full SHA.
+set -eu
+if [ "$#" -ne 1 ]; then
+  printf '%s\n' '{"check":"evidence","status":"fail","reason":"EXPECTED_SHA_REQUIRED"}' >&2
+  exit 2
+fi
+./remote-agent verify-evidence evidence.json --expected-sha "$1"
+printf '%s\n' '{"check":"evidence","status":"pass"}'

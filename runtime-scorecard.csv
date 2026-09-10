@@ -1,0 +1,4 @@
+row_type,job_id,attempt_id,accepted,wall_seconds,setup_seconds,reviewer_minutes,total_cost,eligible,reason
+attempt,scorecard-job,attempt-local,true,41,2,3,0.17,true,
+attempt,scorecard-job,attempt-remote,true,68,19,3,0.30,true,
+decision,scorecard-job,attempt-local,,,,,,true,lowest eligible total cost

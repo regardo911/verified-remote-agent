@@ -1,0 +1,17 @@
+{
+  "job_id": "scorecard-job",
+  "attempt_id": "attempt-local",
+  "base_sha": "1111111111111111111111111111111111111111",
+  "acceptance_digest": "sha256:accepted",
+  "reviewer_rule": "one-human",
+  "accepted": true,
+  "wall_seconds": 41,
+  "setup_seconds": 2,
+  "reviewer_minutes": 3,
+  "runtime_cost": "0.05",
+  "model_cost": "0.12",
+  "storage_cost": "0.00",
+  "network_cost": "0.00",
+  "evidence_complete": true,
+  "hard_constraints": []
+}

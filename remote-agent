@@ -1,0 +1,4 @@
+#!/bin/sh
+# Chapter 12: keep the reader-facing launcher local and replaceable.
+set -eu
+exec python3 "$(dirname "$0")/remote_agent.py" "$@"
