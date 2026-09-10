@@ -1,6 +1,9 @@
 # Verified Remote Agent
 
-Dispatch one bounded repository change and bring back exact-SHA evidence you can inspect.
+**Dispatch one bounded repository change and bring back exact-SHA evidence you can inspect.**
+
+The companion repository for *Remote Coding Agents: Ship Verified Pull Requests Anywhere*.
+Book and more at [youcanbuildthings.com](https://youcanbuildthings.com).
 
 This repository gives you a local control plane for job admission, isolated Git worktrees, durable SQLite state, policy decisions, repository-owned checks, evidence verification, capacity limits, and guarded recovery. The bundled adapter changes one documentation fixture in a repository you name; it doesn't contact a hosted service.
 
